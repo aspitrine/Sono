@@ -31,7 +31,7 @@ module.exports = (io) => {
       await scene.save();
       const room = _.kebabCase(`${scene._id}${data.action.from.name}`);
 
-      io.to(room).emit('actionDone', scene.actions);
+      io.to(room).emit('actionDone', { actions: scene.actions, action: data.action });
     });
 
     socket.on('disconnect', () => {

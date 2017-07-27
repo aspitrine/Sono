@@ -11,6 +11,7 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 import { red500, green500, white } from 'material-ui/styles/colors';
 import SvgIcon from '../../components/svgIcon';
 import io from 'socket.io-client';
+import { toastr } from 'react-redux-toastr';
 import _ from 'lodash';
 const socket = io();
 
@@ -23,8 +24,9 @@ class StageShow extends Component {
   }
 
   componentDidMount() {
-    socket.on('actionDone', actions => {
-      this.props.setActions(actions);
+    socket.on('actionDone', data => {
+      toastr.info('Action réalisé', `Volume ${data.action.for.name} ${data.action.for.instrument.label} ${data.action.up ? 'Augmenter' : 'Diminuer'}`);
+      this.props.setActions(data.actions);
     });
   }
 
