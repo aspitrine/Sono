@@ -11,7 +11,8 @@ import RemoveIcon from 'material-ui/svg-icons/content/remove';
 import AddIcon from 'material-ui/svg-icons/content/add';
 import { red500, green500, white } from 'material-ui/styles/colors';
 import SvgIcon from '../../components/svgIcon';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
+import { toastr } from 'react-redux-toastr';
 const socket = io();
 
 class StageShowSono extends Component {
@@ -25,7 +26,11 @@ class StageShowSono extends Component {
   componentDidMount() {
     socket.emit('joinRoom', this.props.match.params.id);
     socket.on('actionTodo', action => {
-      console.log(action);
+      toastr.info(
+        'Nouvelle action',
+        `${action.up ? 'Augmenter' : 'Diminuer'} Volume ${action.for.name} - ${action.for.instrument.label} pour ${action.from.name} - ${action.from.label}`,
+        { timeOut: 0 }
+      );
       this.props.addAction(action);
     });
   }
