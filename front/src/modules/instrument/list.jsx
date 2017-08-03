@@ -11,7 +11,8 @@ const initialState = Map({
     { value: 'electricGuitar', label: 'Guitare élecrique' },
     { value: 'bassGuitar', label: 'Guitare basse' },
     { value: 'piano', label: 'Piano' },
-    { value: 'brass', label: 'Cuivre' }
+    { value: 'brass', label: 'Cuivre' },
+    { value: 'drum', label: 'Batterie' },
   ]),
   isLoading: false
 })
