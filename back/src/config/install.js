@@ -14,11 +14,11 @@ DB.once('open', () => {
   DB.dropDatabase().then(() => {
     console.log('Database cleared');
     console.log('Start sample');
-    sample.execute(path.join(__dirname, '/../samples/')).then(() => {
-      console.log('Sample Done');
-      process.exit(0);
-    }).catch((err) => {
-      console.log(err);
-    });
+    // sample.execute(path.join(__dirname, '/../samples/')).then(() => {
+    //   console.log('Sample Done');
+    //   process.exit(0);
+    // }).catch((err) => {
+    //   console.log(err);
+    // });
   });
 });

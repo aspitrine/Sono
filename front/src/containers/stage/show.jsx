@@ -4,6 +4,14 @@ import { connect } from 'react-redux';
 import Loader from '../../components/loader';
 import { push } from 'react-router-redux';
 import { RaisedButton, Card, CardActions, CardHeader, CardText, TextField, SelectField, MenuItem, Subheader, List, ListItem, Avatar, Divider } from 'material-ui';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 import { getData, changeCurrentInstrument, addAction, setActions } from '../../modules/stage/show';
 import { Row, Col } from 'react-flexbox-grid';
 import RemoveIcon from 'material-ui/svg-icons/content/remove';
@@ -14,6 +22,7 @@ import io from 'socket.io-client';
 import { toastr } from 'react-redux-toastr';
 import _ from 'lodash';
 const socket = io();
+import './stage.css'
 
 class StageShow extends Component {
   constructor(props) {
@@ -67,44 +76,52 @@ class StageShow extends Component {
         </SelectField>
         <div style={{ marginTop: '20px' }}>
           <Row>
-            {
-              data.instruments.map((d, index) => (
-                <Col xs={12} md={6} key={`${index}${d.name}`} style={{ marginBottom: '15px' }}>
-                  <Card>
-                    <CardText style={styleCenter} >
-                      {d.name} - {d.instrument.label}
-                    </CardText>
-                    <CardText>
+            <Table selectable={false}>
+              <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                <TableRow>
+                  <TableHeaderColumn>Instrument</TableHeaderColumn>
+                  <TableHeaderColumn>Actions</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody displayRowCheckbox={false} showRowHover>
+              {data.instruments.map((d, index) => (
+                <TableRow>
+                  <TableRowColumn className="aligner">
+                    <div>
                       <SvgIcon src={`/${d.instrument.value}.svg`} />
-                    </CardText>
-                    <CardText>
-                      <Row>
-                        <Col xs={6}>
-                          <RaisedButton
-                            backgroundColor={red500}
-                            labelColor={white}
-                            icon={<RemoveIcon />}
-                            disabled={currentInstrument.index === false}
-                            onTouchTap={() => this.onClickTurnVolume(false, d)}
-                            fullWidth
-                          />
-                        </Col>
-                        <Col xs={6}>
-                          <RaisedButton
-                            backgroundColor={green500}
-                            labelColor={white}
-                            icon={<AddIcon />}
-                            disabled={currentInstrument.index === false}
-                            onTouchTap={() => this.onClickTurnVolume(true, d)}
-                            fullWidth
-                          />
-                        </Col>
-                      </Row>
-                    </CardText>
-                  </Card>
-                </Col>
-              ))
-            }
+                    </div>
+                    <div>
+                      {d.name} - {d.instrument.label}
+                    </div>
+                  </TableRowColumn>
+                  <TableRowColumn>
+                    <Row>
+                      <Col xs={6}>
+                        <RaisedButton
+                          backgroundColor={red500}
+                          labelColor={white}
+                          icon={<RemoveIcon />}
+                          disabled={currentInstrument.index === false}
+                          onTouchTap={() => this.onClickTurnVolume(false, d)}
+                          fullWidth
+                        />
+                      </Col>
+                      <Col xs={6}>
+                        <RaisedButton
+                          backgroundColor={green500}
+                          labelColor={white}
+                          icon={<AddIcon />}
+                          disabled={currentInstrument.index === false}
+                          onTouchTap={() => this.onClickTurnVolume(true, d)}
+                          fullWidth
+                        />
+                      </Col>
+                    </Row>
+                  </TableRowColumn>
+                </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </Row>
         </div>
         <div style={{ marginTop: '20px' }}>
